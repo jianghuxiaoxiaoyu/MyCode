@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.crowdfunding.member.dao.MemberDao" >
+
+	<insert id="saveMemberCertList" >
+		insert into t_member_cert (memberid,certid,iconpath) values 
+		<foreach collection="list" item="mc" separator=",">
+			(#{mc.memberid},#{mc.certid},#{mc.iconpath})
+		</foreach>
+	</insert>
+
+
+    <select id="queryMemberCertsByMemberId" resultType="com.atguigu.crowdfunding.common.bean.MemberCert">
+        select 
+            mc.*,
+            c.name as certname
+        from t_member_cert mc
+        join t_cert c on mc.certid = c.id
+        where mc.memberid = #{memberid}
+    </select>
+
+</mapper>
